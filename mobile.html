@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Preview — TEDxTampa</title>
+<meta name="description" content="TEDxTampa site preview in a mobile frame.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #0d0d0d;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+  }
+
+  .logo { font-size: 20px; color: #fff; text-decoration: none; }
+  .logo b { color: #eb0028; font-weight: 700; }
+  .logo span { font-weight: 400; }
+
+  .bar__note { font-size: 12px; color: #6b6b6b; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .bar a.desktop-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .phone {
+    margin-top: 12px;
+    width: 412px;
+    height: 866px;
+    max-height: calc(100vh - 140px);
+    border-radius: 48px;
+    background: #1a1a1a;
+    border: 1px solid #2e2e2e;
+    padding: 11px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+    position: relative;
+    margin-bottom: 40px;
+    flex-shrink: 0;
+  }
+
+  .phone::after {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 26px;
+    border-radius: 999px;
+    background: #000;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .phone__screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 38px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .phone__screen iframe {
+    width: 390px;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  @media (max-height: 1000px) {
+    .phone { transform: scale(0.86); transform-origin: top center; margin-bottom: -80px; }
+  }
+
+  @media (max-width: 480px) {
+    /* On an actual phone, skip the frame and go straight to the site */
+    .phone { display: none; }
+    .redirect-note { padding: 40px 24px; text-align: center; font-size: 15px; line-height: 1.6; color: #bbb; }
+  }
+
+  .redirect-note { display: none; }
+  @media (max-width: 480px) { .redirect-note { display: block; } }
+
+  .view-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 95;
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    background: #000;
+    border: 1px solid #2a2a2a;
+    border-radius: 999px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .view-toggle button {
+    border: none;
+    background: none;
+    color: #9a9a9a;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .view-toggle button.is-active {
+    background: #eb0028;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .view-toggle button:not(.is-active):hover { color: #fff; }
+
+  @media (max-width: 480px) { .view-toggle { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="logo"><b>TEDx</b><span>Tampa</span></span>
+  <span class="bar__note">Mobile Preview · 390px</span>
+</div>
+
+<div class="phone">
+  <div class="phone__screen">
+    <iframe id="screen" src="index.html" title="TEDxTampa mobile preview"></iframe>
+  </div>
+</div>
+
+<p class="redirect-note">You're already on a phone — just visit the <a href="index.html" style="color:#eb0028; font-weight:700;">site itself</a> for the real mobile experience.</p>
+
+<div class="view-toggle" aria-label="Switch preview view">
+  <button type="button" id="toDesktop">Desktop</button>
+  <button class="is-active" type="button">Mobile</button>
+</div>
+
+<script>
+  var PAGES = ['index.html', 'talks.html', 'impact.html', 'about.html', 'partners.html'];
+  var frame = document.getElementById('screen');
+  var currentPage = 'index.html';
+
+  // Deep link: mobile.html#talks.html (or ?page=talks.html) opens that page in the frame
+  var param = new URLSearchParams(window.location.search).get('page') ||
+              decodeURIComponent(window.location.hash.slice(1));
+  if (PAGES.indexOf(param) !== -1) {
+    currentPage = param;
+    frame.src = param;
+  }
+
+  // Track wherever the user navigates inside the phone (via the site's own menu)
+  frame.addEventListener('load', function () {
+    try {
+      var page = frame.contentWindow.location.pathname.split('/').pop() || 'index.html';
+      if (page.indexOf('.html') === -1) page += '.html';
+      if (PAGES.indexOf(page) !== -1) currentPage = page;
+    } catch (e) { /* cross-origin frame — keep last known page */ }
+  });
+
+  // Toggle back to the desktop version of whatever page is in the frame
+  document.getElementById('toDesktop').addEventListener('click', function () {
+    window.location.href = currentPage;
+  });
+</script>
+
+</body>
+</html>

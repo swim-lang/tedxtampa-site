@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEDxTampa — Lift As You Climb</title>
+<meta name="description" content="TEDxTampa returned May 2, 2025 with a sold-out evening of ten talks. Watch every talk from the Lift As You Climb stage, free.">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/main.js" defer></script>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>
+  <ul class="nav__links" id="navLinks">
+    <span class="nav__brand"><b>TEDx</b><span>Tampa</span></span>
+    <button class="nav__close" aria-label="Close menu" onclick="document.getElementById('navLinks').classList.remove('is-open')">&times;</button>
+    <li class="nav__home"><a href="index.html" aria-current="page">Home</a></li>
+    <li><a href="talks.html">Talks &amp; Speakers</a></li>
+    <li><a href="impact.html">Impact</a></li>
+    <li><a href="about.html">About &amp; Team</a></li>
+    <li><a href="partners.html">Partners</a></li>
+  </ul>
+  <a class="btn btn--red" href="talks.html"><span class="play"></span>Watch the Talks</a>
+  <button class="nav__burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('is-open')">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<header class="hero">
+  <p class="kicker label">TEDxTampa · Friday, May 2, 2025 · Tampa, Florida</p>
+  <h1 class="display hero__headline">
+    <span class="line"><span class="line__inner">Lift As</span></span>
+    <span class="line"><span class="line__inner line__inner--accent">You Climb</span></span>
+  </h1>
+  <div class="hero__bottom">
+    <p class="hero__lede">A sold-out return to the Tampa stage — ten voices and one community around ideas that move people forward. Every talk is now free to watch.</p>
+    <div class="hero__ctas">
+      <a class="btn btn--red" href="talks.html"><span class="play"></span>Watch the Talks</a>
+      <a class="btn btn--outline" href="talks.html">Meet the Speakers</a>
+    </div>
+  </div>
+</header>
+
+<div class="photo-marquee" aria-label="Photos from TEDxTampa">
+  <div class="photo-marquee__track">
+    <img src="assets/stage-swami-wide.jpg" alt="Swami Brahmaviharidas speaking beside the TEDx letters at Ferguson Hall">
+    <img src="assets/audience-full-room.jpg" alt="The sold-out audience at Ferguson Hall at the Straz Center">
+    <img src="assets/speaker-facing-audience.jpg" alt="A speaker facing the full theater from the TEDxTampa stage">
+    <img src="assets/speaker-couris.jpg" alt="John D. Couris speaking on the TEDxTampa stage">
+    <img src="assets/theater-tiers.jpg" alt="The tiered balconies of Ferguson Hall">
+    <img src="assets/speaker-stephens.jpg" alt="Michael Stephens beside the TEDx letters">
+    <img src="assets/museum-lobby.jpg" alt="Check-in at the Tampa Museum of Art">
+    <img src="assets/speaker-swami.jpg" alt="Swami Brahmaviharidas on the red dot">
+    <!-- duplicate set for a seamless loop -->
+    <img src="assets/stage-swami-wide.jpg" alt="" aria-hidden="true">
+    <img src="assets/audience-full-room.jpg" alt="" aria-hidden="true">
+    <img src="assets/speaker-facing-audience.jpg" alt="" aria-hidden="true">
+    <img src="assets/speaker-couris.jpg" alt="" aria-hidden="true">
+    <img src="assets/theater-tiers.jpg" alt="" aria-hidden="true">
+    <img src="assets/speaker-stephens.jpg" alt="" aria-hidden="true">
+    <img src="assets/museum-lobby.jpg" alt="" aria-hidden="true">
+    <img src="assets/speaker-swami.jpg" alt="" aria-hidden="true">
+  </div>
+</div>
+
+<section class="stats" aria-label="The event at a glance">
+  <div class="stat">
+    <span class="stat__value" data-count="10">10</span>
+    <span class="label">Speakers &amp; official talks</span>
+  </div>
+  <div class="stat">
+    <span class="stat__value" data-count="2">2</span>
+    <span class="label">Tampa venues, one evening</span>
+  </div>
+  <div class="stat">
+    <span class="stat__value stat__value--red" data-count="1000">1,000</span>
+    <span class="label">Seats made available</span>
+  </div>
+  <div class="stat">
+    <span class="stat__value" data-reveal>Sold Out</span>
+    <span class="label">Tampa showed up</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head">
+    <div>
+      <span class="label label--red">From the Stage</span>
+      <h2 data-animate-lines>Watch the Talks</h2>
+    </div>
+    <a class="btn btn--outline-dark" href="talks.html">All 10 Talks →</a>
+  </div>
+  <div class="talk-cards">
+    <a class="talk-card" href="https://www.youtube.com/watch?v=6g4Zf6RdGlM">
+      <div class="talk-card__thumb">
+        <img src="assets/talk-dekay.jpg" alt="Tim DeKay on the TEDxTampa stage">
+        <span class="talk-card__play"><span class="play"></span></span>
+      </div>
+      <div class="talk-card__meta">
+        <span class="label">Leadership · Tim DeKay</span>
+        <span class="talk-card__title">The Safety Paradox: How Vulnerability Creates Powerful Leadership</span>
+        <span class="talk-card__speaker">Tim DeKay — Actor, Director &amp; Producer</span>
+      </div>
+    </a>
+    <a class="talk-card" href="https://www.youtube.com/watch?v=znBxXg3M8p4">
+      <div class="talk-card__thumb">
+        <img src="assets/talk-law.jpg" alt="Rhea Law presenting on the TEDxTampa stage">
+        <span class="talk-card__play"><span class="play"></span></span>
+      </div>
+      <div class="talk-card__meta">
+        <span class="label">Education · Rhea Law</span>
+        <span class="talk-card__title">Why America's Future Depends on the Success of Research Universities</span>
+        <span class="talk-card__speaker">Rhea Law — President, University of South Florida</span>
+      </div>
+    </a>
+    <a class="talk-card" href="https://www.youtube.com/watch?v=WjXRYGS5Csc">
+      <div class="talk-card__thumb">
+        <img src="assets/stage-lift-screen.jpg" alt="The Lift As You Climb title screen above the TEDxTampa stage">
+        <span class="talk-card__play"><span class="play"></span></span>
+      </div>
+      <div class="talk-card__meta">
+        <span class="label">Healthcare &amp; AI · Wardah Inam</span>
+        <span class="talk-card__title">Redesigning Healthcare: Abundance, Trust, and Outcomes Through AI</span>
+        <span class="talk-card__speaker">Wardah Inam — Co-founder &amp; CEO, Overjet</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section section--black">
+  <div class="section__head">
+    <div>
+      <span class="label label--red">Ten Voices</span>
+      <h2 data-animate-lines>Meet the Speakers</h2>
+    </div>
+    <a class="btn btn--outline btn--small" href="talks.html">All Speakers →</a>
+  </div>
+  <div class="speaker-tiles">
+    <div class="speaker-tile">
+      <div class="speaker-tile__photo"><img src="assets/speaker-couris.jpg" alt="John D. Couris speaking on the TEDxTampa stage"></div>
+      <h3>John D. Couris</h3>
+      <p>President and CEO, Tampa General Hospital</p>
+    </div>
+    <div class="speaker-tile">
+      <div class="speaker-tile__photo"><img src="assets/talk-law.jpg" alt="Rhea Law on stage"></div>
+      <h3>Rhea Law</h3>
+      <p>President, University of South Florida</p>
+    </div>
+    <div class="speaker-tile">
+      <div class="speaker-tile__photo"><img src="assets/speaker-swami.jpg" alt="Swami Brahmaviharidas on the red dot"></div>
+      <h3>Swami Brahmaviharidas</h3>
+      <p>Spiritual Leader; Head of Intl. Relations, BAPS</p>
+    </div>
+    <div class="speaker-tile">
+      <div class="speaker-tile__photo"><img src="assets/speaker-inam.jpg" alt="Wardah Inam addressing the audience from the TEDxTampa stage"></div>
+      <h3>Wardah Inam</h3>
+      <p>Co-Founder &amp; CEO, Overjet</p>
+    </div>
+    <div class="speaker-tile">
+      <div class="speaker-tile__photo"><img src="assets/speaker-stephens.jpg" alt="Michael Stephens beside the TEDx letters"></div>
+      <h3>Michael Stephens</h3>
+      <p>CEO, Tampa International Airport</p>
+    </div>
+  </div>
+</section>
+
+<figure class="quote">
+  <span class="quote__mark">&ldquo;</span>
+  <blockquote data-typewriter="It's not just an event; it's a catalyst — where ideas collide, connections form.">
+    <span class="type-sizer">It's not just an event; it's a catalyst — where ideas collide, connections form.</span>
+    <span class="type-live" aria-hidden="true"></span>
+  </blockquote>
+  <figcaption>Krishna Patel, Curator — TEDxTampa</figcaption>
+</figure>
+
+<section class="band--center band">
+  <span class="label label--red">Keep the Ideas Moving</span>
+  <h2 data-animate-lines class="display">Ten speakers. Ten talks. One evening worth revisiting.</h2>
+  <p class="band__sub">The stage may be quiet now, but the ideas are ready whenever you are.</p>
+  <a class="btn btn--red" href="talks.html"><span class="play"></span>Watch All</a>
+</section>
+
+<footer class="footer">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>
+      <p>This independent TEDx event is operated under license from TED. In the spirit of ideas worth spreading, TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.</p>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <span class="label">Site</span>
+        <a href="talks.html">Talks &amp; Speakers</a>
+        <a href="impact.html">Impact</a>
+        <a href="about.html">About &amp; Team</a>
+        <a href="partners.html">Partners</a>
+      </div>
+      <div class="footer__col">
+        <span class="label">Elsewhere</span>
+        <a href="https://www.instagram.com/tedxtampa/">Instagram</a>
+        <a href="https://www.flickr.com/photos/tags/tedxtampa/">Flickr — Event Photos</a>
+        <a href="https://www.youtube.com/@TEDx">YouTube — TEDx</a>
+        <a href="https://www.ted.com/">TED.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>TEDxTampa · Lift As You Climb · Tampa, Florida · May 2, 2025</span>
+    <span>x = independently organized TED event</span>
+  </div>
+</footer>
+
+</body>
+</html>
