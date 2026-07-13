@@ -13,6 +13,8 @@ create table if not exists tedxtampa_review_comments (
   comment text not null,
   status text not null default 'open',
   viewport jsonb,
+  -- exact click point within the section, as {x, y} fractions (0–1)
+  anchor jsonb,
   created_at timestamptz not null default now(),
   resolved_at timestamptz,
   -- team replies + client acknowledgement (Off Menu's second migration, folded in)

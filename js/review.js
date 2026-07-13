@@ -92,6 +92,7 @@
       id: row.id, project: row.project, page: row.page, path: row.path,
       reviewId: row.review_id, selector: row.selector, textQuote: row.text_quote || '',
       comment: row.comment, status: row.status || 'open', viewport: row.viewport || null,
+      anchor: row.anchor || null,
       createdAt: row.created_at, resolvedAt: row.resolved_at || null,
       reply: row.reply || '', replyAt: row.reply_at || null, replyAck: !!row.reply_ack,
     };
@@ -101,6 +102,7 @@
       id: item.id, project: item.project, page: item.page, path: item.path,
       review_id: item.reviewId, selector: item.selector, text_quote: item.textQuote,
       comment: item.comment, status: item.status, viewport: item.viewport,
+      anchor: item.anchor || null,
       created_at: item.createdAt, resolved_at: item.resolvedAt || null,
     };
   };
@@ -158,29 +160,36 @@
     renderPins();
   };
 
-  // Numbered pins anchored to each commented section, tracking scroll/resize.
+  // One numbered pin per comment, at the exact spot the reviewer clicked.
+  // Anchors are stored as {x, y} fractions of the section box, so pins stay
+  // glued to the right place across scrolling, resizing, and mobile layouts.
   var renderPins = function () {
     pinLayer.innerHTML = '';
     if (state.mode !== 'browse' && state.mode !== 'comment') return;
-    var counts = {};
-    openComments().forEach(function (c) { counts[c.reviewId] = (counts[c.reviewId] || 0) + 1; });
-    document.querySelectorAll('[data-review-id]').forEach(function (node) {
-      var n = counts[node.dataset.reviewId];
-      if (!n) return;
+    // Oldest comment = pin 1, so numbering stays stable as new notes arrive.
+    var ordered = openComments().slice().reverse();
+    ordered.forEach(function (comment, index) {
+      var node = document.querySelector('[data-review-id="' + CSS.escape(comment.reviewId) + '"]');
+      if (!node) return; // comment belongs to a section on another page
       var rect = node.getBoundingClientRect();
-      if (rect.bottom < 8 || rect.top > window.innerHeight - 8) return;
+      // Legacy comments without an anchor fall back to the section corner.
+      var a = comment.anchor && typeof comment.anchor.x === 'number'
+        ? comment.anchor : { x: 0, y: 0 };
+      var px = rect.left + a.x * rect.width;
+      var py = rect.top + a.y * rect.height;
+      if (py < 8 || py > window.innerHeight - 8) return; // off-screen
       var pin = document.createElement('button');
       pin.type = 'button';
       pin.className = 'review-pin';
-      pin.textContent = String(n);
-      pin.title = n + ' comment' + (n > 1 ? 's' : '') + ' · ' + node.dataset.reviewId;
-      pin.style.left = Math.max(20, Math.min(window.innerWidth - 20, rect.left + 18)) + 'px';
-      pin.style.top = Math.max(20, Math.min(window.innerHeight - 20, rect.top + 18)) + 'px';
+      pin.textContent = String(index + 1);
+      pin.title = comment.comment.slice(0, 80) + ' · ' + comment.reviewId;
+      pin.style.left = Math.max(20, Math.min(window.innerWidth - 20, px)) + 'px';
+      pin.style.top = Math.max(20, Math.min(window.innerHeight - 20, py)) + 'px';
       pin.addEventListener('click', function () {
         state.panelOpen = true;
-        state.commentTab = 'open';
+        state.commentTab = comment.reply ? 'reviewed' : 'open';
         render();
-        highlightCommentTarget(node.dataset.reviewId);
+        highlightCommentTarget(comment.reviewId);
       });
       pinLayer.appendChild(pin);
     });
@@ -307,6 +316,7 @@
       textQuote: state.activeTarget.textQuote,
       comment: draft,
       status: 'open',
+      anchor: state.activeTarget.anchor || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       createdAt: new Date().toISOString(),
       resolvedAt: null,
@@ -484,12 +494,19 @@
     event.preventDefault();
     event.stopPropagation();
     var rect = target.getBoundingClientRect();
+    // Exact click point, stored as fractions of the section box.
+    var anchor = {
+      x: Math.max(0, Math.min(1, (event.clientX - rect.left) / Math.max(1, rect.width))),
+      y: Math.max(0, Math.min(1, (event.clientY - rect.top) / Math.max(1, rect.height))),
+    };
     state.activeTarget = {
       reviewId: target.dataset.reviewId,
       selector: '[data-review-id="' + target.dataset.reviewId + '"]',
-      textQuote: textQuote(target),
-      top: Math.min(window.innerHeight - 280, Math.max(16, rect.top + 16)),
-      left: Math.min(window.innerWidth - 396, Math.max(16, rect.left + 16)),
+      textQuote: textQuote(event.target) || textQuote(target),
+      anchor: anchor,
+      // Popover opens right at the click, clamped to the viewport.
+      top: Math.min(window.innerHeight - 300, Math.max(16, event.clientY + 12)),
+      left: Math.min(window.innerWidth - 396, Math.max(16, event.clientX + 12)),
     };
     render();
   }, true);
