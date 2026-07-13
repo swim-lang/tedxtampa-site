@@ -7,6 +7,8 @@
 <meta name="description" content="TEDxTampa returned May 2, 2025 with a sold-out evening of ten talks. Watch every talk from the Lift As You Climb stage, free.">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/main.js" defer></script>
+<link rel="stylesheet" href="css/review.css">
+<script src="js/review.js" defer></script>
 </head>
 <body>
 
@@ -27,7 +29,7 @@
   </button>
 </nav>
 
-<header class="hero">
+<header class="hero" data-review-id="home-hero">
   <p class="kicker label">TEDxTampa · Friday, May 2, 2025 · Tampa, Florida</p>
   <h1 class="display hero__headline">
     <span class="line"><span class="line__inner">Lift As</span></span>
@@ -42,7 +44,7 @@
   </div>
 </header>
 
-<div class="photo-marquee" aria-label="Photos from TEDxTampa">
+<div class="photo-marquee" aria-label="Photos from TEDxTampa" data-review-id="home-photos">
   <div class="photo-marquee__track">
     <img src="assets/stage-swami-wide.jpg" alt="Swami Brahmaviharidas speaking beside the TEDx letters at Ferguson Hall">
     <img src="assets/audience-full-room.jpg" alt="The sold-out audience at Ferguson Hall at the Straz Center">
@@ -64,7 +66,7 @@
   </div>
 </div>
 
-<section class="stats" aria-label="The event at a glance">
+<section class="stats" aria-label="The event at a glance" data-review-id="home-stats">
   <div class="stat">
     <span class="stat__value" data-count="10">10</span>
     <span class="label">Speakers &amp; official talks</span>
@@ -83,7 +85,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" data-review-id="home-talks">
   <div class="section__head">
     <div>
       <span class="label label--red">From the Stage</span>
@@ -128,7 +130,7 @@
   </div>
 </section>
 
-<section class="section section--black">
+<section class="section section--black" data-review-id="home-speakers">
   <div class="section__head">
     <div>
       <span class="label label--red">Ten Voices</span>
@@ -165,7 +167,7 @@
   </div>
 </section>
 
-<figure class="quote">
+<figure class="quote" data-review-id="home-quote">
   <span class="quote__mark">&ldquo;</span>
   <blockquote data-typewriter="It's not just an event; it's a catalyst — where ideas collide, connections form.">
     <span class="type-sizer">It's not just an event; it's a catalyst — where ideas collide, connections form.</span>
@@ -174,14 +176,14 @@
   <figcaption>Krishna Patel, Curator — TEDxTampa</figcaption>
 </figure>
 
-<section class="band--center band">
+<section class="band--center band" data-review-id="home-cta">
   <span class="label label--red">Keep the Ideas Moving</span>
   <h2 data-animate-lines class="display">Ten speakers. Ten talks. One evening worth revisiting.</h2>
   <p class="band__sub">The stage may be quiet now, but the ideas are ready whenever you are.</p>
   <a class="btn btn--red" href="talks.html"><span class="play"></span>Watch All</a>
 </section>
 
-<footer class="footer">
+<footer class="footer" data-review-id="home-footer">
   <div class="footer__top">
     <div class="footer__brand">
       <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>

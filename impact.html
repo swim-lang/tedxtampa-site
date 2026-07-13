@@ -7,6 +7,8 @@
 <meta name="description" content="A sold-out return. A city ready to listen. What TEDxTampa's May 2, 2025 evening set in motion.">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/main.js" defer></script>
+<link rel="stylesheet" href="css/review.css">
+<script src="js/review.js" defer></script>
 </head>
 <body>
 
@@ -27,7 +29,7 @@
   </button>
 </nav>
 
-<header class="page-hero page-hero--red">
+<header class="page-hero page-hero--red" data-review-id="impact-hero">
   <p class="kicker kicker--black label">A Sold-Out Return · May 2, 2025</p>
   <div class="page-hero__row">
     <h1 data-animate-lines class="display">Impact</h1>
@@ -35,11 +37,11 @@
   </div>
 </header>
 
-<div class="photo-band photo-band--single">
+<div class="photo-band photo-band--single" data-review-id="impact-photo">
   <img src="assets/theater-tiers.jpg" alt="The tiered balconies of Ferguson Hall filling with the TEDxTampa audience">
 </div>
 
-<section class="stats" aria-label="The snapshot" style="grid-template-columns: repeat(3, 1fr);">
+<section class="stats" aria-label="The snapshot" style="grid-template-columns: repeat(3, 1fr);" data-review-id="impact-stats">
   <div class="stat">
     <span class="stat__value stat__value--red" data-reveal>Sold Out</span>
     <span class="label">Tampa came ready</span>
@@ -57,7 +59,7 @@
   </div>
 </section>
 
-<article class="story">
+<article class="story" data-review-id="impact-tampa-ready">
   <div class="story__photo">
     <img src="assets/museum-group.jpg" alt="Guests connecting at the Tampa Museum of Art before the talks">
   </div>
@@ -68,7 +70,7 @@
   </div>
 </article>
 
-<article class="story story--flip">
+<article class="story story--flip" data-review-id="impact-venues">
   <div class="story__copy">
     <span class="label label--red">Two Venues, One Journey</span>
     <h2 data-animate-lines>From the museum to the Straz</h2>
@@ -80,7 +82,7 @@
   </div>
 </article>
 
-<section class="section section--panel">
+<section class="section section--panel" data-review-id="impact-summit">
   <div class="cols" style="padding: 0; gap: 80px;">
     <div>
       <span class="label label--red" style="display:block; margin-bottom:16px;">Summit Startups · Retrospective</span>
@@ -93,7 +95,7 @@
   </div>
 </section>
 
-<section class="band" style="border-bottom: 1px solid var(--color-line);">
+<section class="band" style="border-bottom: 1px solid var(--color-line);" data-review-id="impact-news">
   <div>
     <span class="label label--red" style="display:block; margin-bottom:10px;">In the News</span>
     <h2 style="font-size:28px; font-weight:700; text-transform:none; letter-spacing:0; line-height:1.2;">TEDxTampa returns to the Straz Center</h2>
@@ -102,12 +104,12 @@
   <a class="btn btn--red" href="https://thatssotampa.com/tedx-tampa-conference-straz/">Read the Coverage →</a>
 </section>
 
-<figure class="voice">
+<figure class="voice" data-review-id="impact-quote">
   <blockquote>[PLACEHOLDER — Approved quote from a Tampa civic leader, attendee, or partner about the evening. Do not publish until exact wording and attribution are confirmed.]</blockquote>
   <figcaption>[Name, Title — source pending approval]</figcaption>
 </figure>
 
-<footer class="footer">
+<footer class="footer" data-review-id="impact-footer">
   <div class="footer__top">
     <div class="footer__brand">
       <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>
