@@ -11,8 +11,8 @@
   'use strict';
 
   var REVIEW_CONFIG = {
-    supabaseUrl: 'https://kirmozciaosdbmndomhn.supabase.co',
-    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtpcm1vemNpYW9zZGJtbmRvbWhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMDQ3NDksImV4cCI6MjA5ODU4MDc0OX0.cnTG0J6LyCii3gOvnCcc3j7e1EXa80yJxifkpw4h3LU',
+    supabaseUrl: 'https://wixzgjhsplyfyvhojmru.supabase.co',
+    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpeHpnamhzcGx5Znl2aG9qbXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMzkxMDQsImV4cCI6MjA5OTYxNTEwNH0.MVonP5KWnoEZTZZ855Xp9nD67YjIvG7x0Ul-0eC-s4s',
     project: 'tedxtampa',
     table: 'tedxtampa_review_comments',
   };
