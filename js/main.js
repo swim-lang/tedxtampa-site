@@ -27,6 +27,51 @@
     });
   }
 
+  /* ---------- Parallax intro ---------- */
+
+  var intro = document.querySelector('.intro');
+  if (intro && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var skyWrap = intro.querySelector('.intro__wrap--sky');
+    var logoWrap = intro.querySelector('.intro__wrap--logo');
+    var cityWrap = intro.querySelector('.intro__wrap--city');
+    var cityImg = intro.querySelector('.intro__img--city');
+    var hint = intro.querySelector('.intro__hint');
+    var introTicking = false;
+
+    var introTick = function () {
+      introTicking = false;
+      var runway = intro.offsetHeight - window.innerHeight;
+      var p = Math.min(1, Math.max(0, window.scrollY / Math.max(1, runway)));
+      // Sky drifts up; the logo sinks; the skyline starts slightly sunk and
+      // rises to swallow the logo — the crossing motions sell the depth.
+      var cityBase = cityImg.offsetHeight * 0.18;
+      skyWrap.style.transform = 'translateY(' + (p * -8) + 'vh)';
+      logoWrap.style.transform = 'translateY(' + (p * 50) + 'vh) scale(' + (1 - p * 0.12) + ')';
+      // Fade the logo away as it sinks so it can never peek past the skyline's
+      // bottom edge, whatever the screen's aspect ratio.
+      logoWrap.style.opacity = p < 0.55 ? '1' : String(Math.max(0, 1 - (p - 0.55) / 0.3));
+      // Grows toward the viewer as it rises (origin bottom, so it stays flush)
+      cityWrap.style.transform = 'translateY(' + (cityBase * (1 - p)) + 'px) scale(' + (1 + p * 0.07) + ')';
+      if (hint) {
+        // The load-in animation's `forwards` fill beats inline opacity — clear it when hiding
+        if (p > 0.04) { hint.style.animation = 'none'; hint.style.opacity = '0'; }
+        else { hint.style.animation = ''; hint.style.opacity = ''; }
+      }
+    };
+
+    window.addEventListener('scroll', function () {
+      if (!introTicking) {
+        introTicking = true;
+        requestAnimationFrame(introTick);
+      }
+    }, { passive: true });
+    window.addEventListener('resize', introTick);
+    introTick();
+  } else if (intro) {
+    var hintEl = intro.querySelector('.intro__hint');
+    if (hintEl) hintEl.style.opacity = '1';
+  }
+
   /* ---------- Big-headline line reveals ---------- */
 
   var lineEls = document.querySelectorAll('[data-animate-lines]');

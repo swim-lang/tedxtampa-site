@@ -156,6 +156,126 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
 }
 
+/* ---------- Parallax intro (homepage) ---------- */
+
+.intro {
+  height: 170vh;
+  position: relative;
+  background: var(--color-black);
+}
+
+.intro__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.intro__wrap {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.intro__wrap--sky { z-index: 1; inset: 0 0 -14vh 0; } /* slack so the upward drift never exposes the page behind */
+.intro__wrap--logo {
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.intro__wrap--city { z-index: 3; transform-origin: center bottom; }
+
+.intro__img--sky {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Skyline fits the screen width exactly, pinned to the bottom edge */
+.intro__img--city {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.intro__img--logo {
+  width: min(92vw, 1560px);
+  height: auto;
+  margin-top: -22vh; /* floats in the open sky, clear of the skyline at rest */
+  filter: drop-shadow(0 6px 40px rgba(0, 0, 0, 0.35));
+}
+
+/* Load-in: sky fades, city slides up, then the logo flies in from below the screen */
+.intro__img--sky { animation: intro-fade 1.2s ease both; }
+.intro__img--logo { animation: intro-logo-fly 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both; }
+.intro__img--city { animation: intro-rise-big 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+
+@keyframes intro-logo-fly {
+  from { transform: translateY(110vh); }
+  to { transform: none; }
+}
+
+@keyframes intro-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes intro-rise {
+  from { opacity: 0; transform: translateY(7vh); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-rise-big {
+  from { opacity: 0; transform: translateY(10vh); }
+  to { opacity: 1; transform: none; }
+}
+
+.intro__hint {
+  position: absolute;
+  z-index: 4;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-open);
+  text-transform: uppercase;
+  padding-bottom: 22px;
+  opacity: 0;
+  animation: intro-fade 0.8s ease 1.6s forwards;
+  transition: opacity 0.3s ease;
+}
+
+.intro__hint::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: 16px;
+  background: var(--color-white);
+  animation: hint-drop 1.6s ease-in-out infinite;
+}
+
+@keyframes hint-drop {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(6px); opacity: 0.4; }
+}
+
+@media (max-width: 860px) {
+  .intro { height: 160vh; }
+  .intro__img--logo { width: 92vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { height: 100vh; }
+  .intro__img--sky, .intro__img--logo, .intro__img--city, .intro__hint { animation: none; opacity: 1; }
+}
+
 /* ---------- Nav ---------- */
 
 .nav {
@@ -413,6 +533,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 .stat__value {
+  display: flex;
+  align-items: flex-end; /* words and numerals share a baseline row */
+  height: 88px;
   font-size: 92px;
   font-weight: 900;
   line-height: 0.95;
@@ -420,6 +543,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 .stat__value--red { color: var(--color-red); }
+
+/* Word-valued stats ("Sold Out") stay on one line, scaled to fit their column */
+.stat__value[data-reveal] {
+  white-space: nowrap;
+  font-size: clamp(44px, 4.6vw, 68px);
+}
 
 .stat .label { display: block; margin-top: 8px; color: var(--color-muted); font-size: 11px; }
 
@@ -656,6 +785,13 @@ a { color: inherit; text-decoration: none; }
 }
 
 .band--center h2 { max-width: 1000px; font-size: clamp(36px, 3.9vw, 56px); }
+
+/* Closing band: Tampa skyline ghosted behind a near-white wash */
+.band--tampa {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
+    url("../assets/tampa-skyline.jpg") center 35% / cover no-repeat;
+}
 .band--center .band__sub { font-size: 17px; color: var(--color-muted); }
 .band--red .band__sub { color: var(--color-red-tint); max-width: 800px; line-height: 1.55; }
 
@@ -1155,7 +1291,8 @@ a { color: inherit; text-decoration: none; }
   .photo-band img { width: 100%; }
 
   .stats { grid-template-columns: 1fr 1fr; padding: 32px var(--gutter-mobile); gap: 20px; }
-  .stat__value { font-size: 52px; }
+  .stat__value { font-size: 52px; height: 50px; }
+  .stat__value[data-reveal] { font-size: 32px; }
   .stat .label { font-size: 9px; letter-spacing: 0.1em; }
   .stat p { display: none; }
 
