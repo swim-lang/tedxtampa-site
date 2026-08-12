@@ -143,9 +143,21 @@ ul { list-style: none; }
 @keyframes rise { to { transform: translateY(0); } }
 @keyframes pop { to { transform: scale(1); } }
 
+/* logo variant (home) — wordmark wipes in like a print head */
+.loader__logo img {
+  display: block;
+  width: clamp(280px, 42vw, 620px);
+  height: auto;
+  clip-path: inset(0 100% 0 0);
+  animation: wipe-in 1.1s var(--ease-expo) 0.15s forwards;
+}
+
+@keyframes wipe-in { to { clip-path: inset(0 0 0 0); } }
+
 /* quick repeat-visit variant — everything already settled */
 .loader.is-quick .loader__title .line > span { animation: none; transform: translateY(0); }
 .loader.is-quick .loader__dot { animation: none; transform: scale(1); }
+.loader.is-quick .loader__logo img { animation: none; clip-path: inset(0 0 0 0); }
 
 body.is-loading { overflow: hidden; }
 
