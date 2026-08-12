@@ -1,272 +1,412 @@
-/* TEDxTampa — scroll interactions
-   1. Count-up stats: any [data-count] animates from 0 to its value when scrolled into view.
-   2. Typewriter quote: any [data-typewriter] types its text when scrolled into view.
-   3. Talk rows: hover video peek + lightbox player.
-   4. Desktop/Mobile view toggle (demo tool) — hidden when framed inside mobile.html. */
+/* ==========================================================================
+   TEDxTampa — "The Exhibition" interactions
+   Loader · headline reveals · scroll reveals · count-up · ticker · nav
+   ========================================================================== */
 
 (function () {
-  'use strict';
+  "use strict";
 
-  /* ---------- Desktop / Mobile view toggle ---------- */
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (window.self === window.top) {
-    var page = window.location.pathname.split('/').pop() || 'index.html';
-    if (page.indexOf('.html') === -1) page += '.html';
+  /* ------------------------------------------------------------------
+     LOADER — black slate, counts plates 01→10, then wipes up.
+     Full sequence on first visit per session; skipped afterwards.
+  ------------------------------------------------------------------ */
+  var loader = document.getElementById("loader");
 
-    var toggle = document.createElement('div');
-    toggle.className = 'view-toggle';
-    toggle.setAttribute('aria-label', 'Switch preview view');
-    toggle.innerHTML =
-      '<button class="is-active" type="button">Desktop</button>' +
-      '<button type="button">Mobile</button>';
-    document.body.appendChild(toggle);
+  function dismissLoader(instant) {
+    if (!loader) return;
+    if (instant) {
+      loader.classList.add("is-removed");
+      document.body.classList.remove("is-loading");
+      revealHero();
+      return;
+    }
+    loader.classList.add("is-done");
+    document.body.classList.remove("is-loading");
+    loader.addEventListener("transitionend", function () {
+      loader.classList.add("is-removed");
+    }, { once: true });
+    // reveal hero as the curtain lifts
+    setTimeout(revealHero, 250);
+  }
 
-    toggle.children[1].addEventListener('click', function () {
-      // Hash survives the static server's clean-URL redirect; a query string doesn't
-      window.location.href = 'mobile.html#' + page;
+  function runLoader() {
+    if (!loader) { revealHero(); return; }
+
+    if (reducedMotion) {
+      dismissLoader(true);
+      return;
+    }
+
+    var seen = false;
+    try { seen = sessionStorage.getItem("tedx-loaded") === "1"; } catch (e) {}
+    try { sessionStorage.setItem("tedx-loaded", "1"); } catch (e) {}
+
+    document.body.classList.add("is-loading");
+
+    if (seen) {
+      // repeat visit — quick curtain: title already settled, brief hold, wipe
+      loader.classList.add("is-quick");
+      setTimeout(function () { dismissLoader(false); }, 550);
+      return;
+    }
+
+    // first visit — full sequence with the plate counter 01 → 10
+    var count = document.getElementById("loaderCount");
+    var i = 0;
+    var tick = setInterval(function () {
+      i += 1;
+      if (count) count.textContent = "PLATE " + String(i).padStart(2, "0") + " / 10";
+      if (i >= 10) clearInterval(tick);
+    }, 110);
+
+    setTimeout(function () { dismissLoader(false); }, 1750);
+  }
+
+  /* ------------------------------------------------------------------
+     HERO REVEAL — headline lines rise once the loader clears
+  ------------------------------------------------------------------ */
+  function revealHero() {
+    document.querySelectorAll(".hero .reveal-lines, .hero-splash .reveal-lines").forEach(function (el) {
+      el.classList.add("is-inview");
     });
+    var hero = document.querySelector(".hero, .hero-splash");
+    if (hero) hero.classList.add("is-inview");
+    startMetaStrip();
   }
 
-  /* ---------- Parallax intro ---------- */
+  /* ------------------------------------------------------------------
+     META STRIP — scramble each item into place (letters cycle letters,
+     digits cycle digits), then dissolve the row into a slow ticker.
+  ------------------------------------------------------------------ */
+  var LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var DIGITS = "0123456789";
 
-  var intro = document.querySelector('.intro');
-  if (intro && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var skyWrap = intro.querySelector('.intro__wrap--sky');
-    var logoWrap = intro.querySelector('.intro__wrap--logo');
-    var cityWrap = intro.querySelector('.intro__wrap--city');
-    var cityImg = intro.querySelector('.intro__img--city');
-    var hint = intro.querySelector('.intro__hint');
-    var introTicking = false;
-
-    var introTick = function () {
-      introTicking = false;
-      var runway = intro.offsetHeight - window.innerHeight;
-      var p = Math.min(1, Math.max(0, window.scrollY / Math.max(1, runway)));
-      // Sky drifts up; the logo sinks; the skyline starts slightly sunk and
-      // rises to swallow the logo — the crossing motions sell the depth.
-      var cityBase = cityImg.offsetHeight * 0.18;
-      skyWrap.style.transform = 'translateY(' + (p * -8) + 'vh)';
-      logoWrap.style.transform = 'translateY(' + (p * 50) + 'vh) scale(' + (1 - p * 0.12) + ')';
-      // Fade the logo away as it sinks so it can never peek past the skyline's
-      // bottom edge, whatever the screen's aspect ratio.
-      logoWrap.style.opacity = p < 0.55 ? '1' : String(Math.max(0, 1 - (p - 0.55) / 0.3));
-      // Grows toward the viewer as it rises (origin bottom, so it stays flush)
-      cityWrap.style.transform = 'translateY(' + (cityBase * (1 - p)) + 'px) scale(' + (1 + p * 0.07) + ')';
-      if (hint) {
-        // The load-in animation's `forwards` fill beats inline opacity — clear it when hiding
-        if (p > 0.04) { hint.style.animation = 'none'; hint.style.opacity = '0'; }
-        else { hint.style.animation = ''; hint.style.opacity = ''; }
-      }
-    };
-
-    window.addEventListener('scroll', function () {
-      if (!introTicking) {
-        introTicking = true;
-        requestAnimationFrame(introTick);
-      }
-    }, { passive: true });
-    window.addEventListener('resize', introTick);
-    introTick();
-  } else if (intro) {
-    var hintEl = intro.querySelector('.intro__hint');
-    if (hintEl) hintEl.style.opacity = '1';
-  }
-
-  /* ---------- Big-headline line reveals ---------- */
-
-  var lineEls = document.querySelectorAll('[data-animate-lines]');
-  if (lineEls.length) {
-    lineEls.forEach(function (el) {
-      var parts = el.innerHTML.split(/<br\s*\/?>/i);
-      el.innerHTML = parts.map(function (part) {
-        return '<span class="line"><span class="line__inner">' + part + '</span></span>';
-      }).join('');
-    });
-
-    var lineObserver = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-inview');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-
-    lineEls.forEach(function (el) { lineObserver.observe(el); });
-  }
-
-  /* ---------- Count-up stats ---------- */
-
-  var easeOut = function (t) { return 1 - Math.pow(1 - t, 3); };
-
-  function animateCount(el) {
-    var target = parseInt(el.getAttribute('data-count'), 10);
-    var useComma = el.getAttribute('data-count').length > 3 || el.textContent.indexOf(',') !== -1;
-    var duration = 1400;
+  function scramble(el, finalText, onDone) {
+    var chars = finalText.split("");
+    var lockAt = chars.map(function (c, i) { return 260 + i * 42 + Math.random() * 140; });
     var start = null;
-
     function frame(now) {
       if (!start) start = now;
-      var t = Math.min((now - start) / duration, 1);
-      var value = Math.round(easeOut(t) * target);
-      el.textContent = useComma ? value.toLocaleString('en-US') : String(value);
-      if (t < 1) requestAnimationFrame(frame);
+      var t = now - start;
+      var out = "";
+      var settled = true;
+      for (var i = 0; i < chars.length; i++) {
+        var c = chars[i];
+        if (t < lockAt[i] && /[A-Za-z]/.test(c)) {
+          out += LETTERS[(Math.random() * 26) | 0];
+          settled = false;
+        } else if (t < lockAt[i] && /[0-9]/.test(c)) {
+          out += DIGITS[(Math.random() * 10) | 0];
+          settled = false;
+        } else {
+          out += c;
+        }
+      }
+      el.textContent = out;
+      if (!settled) requestAnimationFrame(frame);
+      else if (onDone) onDone();
     }
     requestAnimationFrame(frame);
   }
 
-  var counters = document.querySelectorAll('[data-count]');
-  if (counters.length) {
-    var countObserver = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          animateCount(entry.target);
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.6 });
+  var metaStarted = false;
 
-    counters.forEach(function (el) {
-      el.textContent = '0';
-      countObserver.observe(el);
+  function startMetaStrip() {
+    if (metaStarted) return;
+    metaStarted = true;
+
+    var strip = document.querySelector(".meta-strip");
+    if (!strip) return;
+
+    var spans = Array.prototype.slice.call(strip.querySelectorAll("span"));
+    var texts = spans.map(function (s) { return s.textContent.trim(); });
+
+    // wrap the static row so it can crossfade out later
+    var staticWrap = document.createElement("div");
+    staticWrap.className = "meta-strip__static";
+    spans.forEach(function (s) { staticWrap.appendChild(s); });
+    strip.appendChild(staticWrap);
+
+    if (reducedMotion) return; // static row stays put
+
+    var remaining = spans.length;
+    spans.forEach(function (s, i) {
+      var final = texts[i];
+      s.textContent = "";
+      setTimeout(function () {
+        scramble(s, final, function () {
+          remaining -= 1;
+          if (remaining === 0) setTimeout(function () { morphToTicker(strip, texts, spans.length - 1); }, 900);
+        });
+      }, i * 150);
     });
   }
 
-  /* ---------- Reveal (used for the non-numeric "Sold Out" stat) ---------- */
+  function morphToTicker(strip, texts, redIndex) {
+    // build one sequence, repeat until it can fill half the loop, then double it
+    var track = document.createElement("div");
+    track.className = "mt-track";
+    strip.appendChild(track);
 
-  var reveals = document.querySelectorAll('[data-reveal]');
-  if (reveals.length) {
-    var revealObserver = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.6 });
+    function seqHTML() {
+      return texts.map(function (t, i) {
+        var cls = i === redIndex ? "mt-item mt-red" : "mt-item";
+        return '<span class="' + cls + '">' + t + '</span><span class="mt-sep">·</span>';
+      }).join("");
+    }
 
-    reveals.forEach(function (el) { revealObserver.observe(el); });
+    strip.classList.add("is-fading");
+    setTimeout(function () {
+      strip.classList.remove("is-fading");
+      strip.classList.add("is-ticker");
+      var half = seqHTML();
+      track.innerHTML = half;
+      // ensure one half is at least as wide as the viewport for a seamless -50% loop
+      while (track.scrollWidth < window.innerWidth && track.innerHTML.length < 40000) {
+        track.innerHTML += half;
+      }
+      track.innerHTML += track.innerHTML; // two identical halves
+    }, 460);
   }
 
-  /* ---------- Typewriter quote ---------- */
+  /* ------------------------------------------------------------------
+     SCROLL REVEALS — IntersectionObserver
+  ------------------------------------------------------------------ */
+  function initObserver() {
+    var targets = document.querySelectorAll("[data-reveal], [data-clip], .reveal-lines:not(.hero .reveal-lines):not(.hero-splash .reveal-lines)");
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      targets.forEach(function (el) { el.classList.add("is-inview"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-inview");
+          if (entry.target.hasAttribute("data-count")) countUp(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: "0px 0px -40px 0px" });
 
-  function typeInto(el) {
-    var live = el.querySelector('.type-live');
-    var text = el.getAttribute('data-typewriter');
-    var i = 0;
-    el.classList.add('is-typing');
+    targets.forEach(function (el) { io.observe(el); });
 
-    function tick() {
-      if (i <= text.length) {
-        live.textContent = text.slice(0, i);
-        i += 1;
-        setTimeout(tick, 26);
+    document.querySelectorAll("[data-count]").forEach(function (el) { io.observe(el); });
+  }
+
+  /* ------------------------------------------------------------------
+     COUNT-UP — stat values animate to their target
+  ------------------------------------------------------------------ */
+  function countUp(el) {
+    if (el.dataset.counted) return;
+    el.dataset.counted = "1";
+    var target = parseInt(el.getAttribute("data-count").replace(/[^0-9]/g, ""), 10);
+    if (isNaN(target)) return;
+    var format = el.getAttribute("data-count").indexOf(",") !== -1;
+    var dur = 1200;
+    var start = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = Math.round(target * eased);
+      el.textContent = format ? val.toLocaleString("en-US") : String(val);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ------------------------------------------------------------------
+     TICKER — duplicate track content so the loop is seamless
+  ------------------------------------------------------------------ */
+  function initTicker() {
+    document.querySelectorAll(".ticker__track").forEach(function (track) {
+      track.innerHTML += track.innerHTML; // 2x for -50% loop
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     NAME PEEK — portrait plate trails the cursor over the speaker wall
+  ------------------------------------------------------------------ */
+  function initNamePeek() {
+    var wall = document.querySelector(".name-wall");
+    if (!wall) return;
+    if (reducedMotion || window.matchMedia("(pointer: coarse)").matches) return;
+
+    var items = wall.querySelectorAll(".name-wall__item[data-photo]");
+    if (!items.length) return;
+
+    var peek = document.createElement("figure");
+    peek.className = "name-peek";
+    peek.setAttribute("aria-hidden", "true");
+    peek.innerHTML = '<img alt=""><figcaption><span class="pk-no"></span><span class="pk-name"></span></figcaption>';
+    document.body.appendChild(peek);
+
+    var img = peek.querySelector("img");
+    var pkNo = peek.querySelector(".pk-no");
+    var pkName = peek.querySelector(".pk-name");
+
+    // preload portraits so the first hover is instant
+    items.forEach(function (it) { new Image().src = it.getAttribute("data-photo"); });
+
+    var tx = 0, ty = 0, cx = 0, cy = 0, raf = null, active = false;
+
+    function loop() {
+      cx += (tx - cx) * 0.16;
+      cy += (ty - cy) * 0.16;
+      peek.style.left = cx + "px";
+      peek.style.top = cy + "px";
+      if (active || Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5) {
+        raf = requestAnimationFrame(loop);
       } else {
-        el.classList.remove('is-typing');
-        el.classList.add('is-typed');
+        raf = null;
       }
     }
-    tick();
+
+    wall.addEventListener("mousemove", function (e) {
+      tx = e.clientX;
+      ty = e.clientY - 18;
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+
+    items.forEach(function (it) {
+      it.addEventListener("mouseenter", function () {
+        var noEl = it.querySelector(".no");
+        var nameEl = it.querySelector(".name");
+        img.src = it.getAttribute("data-photo");
+        img.style.objectPosition = it.getAttribute("data-photo-pos") || "center";
+        pkNo.textContent = "No." + (noEl ? noEl.textContent.trim() : "");
+        var parts = nameEl ? nameEl.textContent.trim().split(" ") : [""];
+        pkName.textContent = parts[parts.length - 1];
+        if (!active) { cx = tx; cy = ty; } // snap on first show, trail afterwards
+        active = true;
+        peek.classList.add("is-visible");
+        if (!raf) raf = requestAnimationFrame(loop);
+      });
+      it.addEventListener("mouseleave", function () {
+        active = false;
+        peek.classList.remove("is-visible");
+      });
+    });
   }
 
-  var typers = document.querySelectorAll('[data-typewriter]');
-  if (typers.length) {
-    var typeObserver = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          typeInto(entry.target);
-          obs.unobserve(entry.target);
+  /* ------------------------------------------------------------------
+     TYPEWRITER — curator quote types in on scroll, red block cursor
+  ------------------------------------------------------------------ */
+  function initTypewriter() {
+    var quote = document.querySelector(".typewriter");
+    if (!quote) return;
+
+    // wrap every character in a span so layout is fixed before typing starts
+    var chars = [];
+    function wrapChars(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          child.textContent.split("").forEach(function (c) {
+            var s = document.createElement("span");
+            s.className = "tw-char";
+            s.textContent = c;
+            frag.appendChild(s);
+            chars.push(s);
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === 1) {
+          wrapChars(child);
         }
       });
-    }, { threshold: 0.5 });
+    }
+    wrapChars(quote);
 
-    typers.forEach(function (el) { typeObserver.observe(el); });
-  }
-
-  /* ---------- Talk rows: hover video peek + lightbox player ---------- */
-
-  var videoRows = document.querySelectorAll('.talk-row[data-video]');
-  if (videoRows.length) {
-    // Build the single reusable peek card
-    var peek = document.createElement('div');
-    peek.className = 'video-peek';
-    peek.setAttribute('aria-hidden', 'true');
-    peek.innerHTML =
-      '<img class="video-peek__thumb" alt="">' +
-      '<div class="video-peek__bar"><span class="play"></span><span>Watch the talk</span></div>';
-    document.body.appendChild(peek);
-    var peekThumb = peek.querySelector('.video-peek__thumb');
-
-    // Build the lightbox
-    var lightbox = document.createElement('div');
-    lightbox.className = 'lightbox';
-    lightbox.setAttribute('role', 'dialog');
-    lightbox.setAttribute('aria-label', 'Video player');
-    lightbox.innerHTML =
-      '<button class="lightbox__close" aria-label="Close video">&times;</button>' +
-      '<div class="lightbox__frame"></div>';
-    document.body.appendChild(lightbox);
-    var frame = lightbox.querySelector('.lightbox__frame');
-
-    function openLightbox(videoId) {
-      frame.innerHTML = '<iframe src="https://www.youtube.com/embed/' + videoId +
-        '?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
-      lightbox.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      quote.classList.add("is-done");
+      return;
     }
 
-    function closeLightbox() {
-      lightbox.classList.remove('is-open');
-      frame.innerHTML = ''; // stop playback
-      document.body.style.overflow = '';
-    }
+    var cursor = document.createElement("span");
+    cursor.className = "tw-cursor";
+    cursor.setAttribute("aria-hidden", "true");
 
-    lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox || e.target.classList.contains('lightbox__close')) closeLightbox();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
-    });
-
-    // Peek follows the cursor; whole row is clickable
-    function movePeek(e) {
-      var x = Math.min(e.clientX + 28, window.innerWidth - 340);
-      var y = e.clientY - peek.offsetHeight - 20;
-      if (y < 12) y = e.clientY + 28;
-      peek.style.transform = '';
-      peek.style.left = x + 'px';
-      peek.style.top = y + 'px';
-    }
-
-    videoRows.forEach(function (row) {
-      var id = row.getAttribute('data-video');
-
-      row.addEventListener('mouseenter', function (e) {
-        peekThumb.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
-        movePeek(e);
-        if (!e.target.closest || !e.target.closest('.btn')) peek.classList.add('is-visible');
-      });
-
-      // Hide the peek while the cursor is over the Watch button so it never blocks the click
-      row.addEventListener('mousemove', function (e) {
-        if (e.target.closest && e.target.closest('.btn')) {
-          peek.classList.remove('is-visible');
-        } else {
-          movePeek(e);
-          peek.classList.add('is-visible');
+    function type() {
+      var i = 0;
+      function step() {
+        if (i >= chars.length) {
+          quote.classList.add("is-done");
+          setTimeout(function () {
+            cursor.classList.add("is-leaving");
+            setTimeout(function () { cursor.remove(); }, 700);
+          }, 1400);
+          return;
         }
-      });
+        var c = chars[i];
+        c.classList.add("is-on");
+        c.parentNode.insertBefore(cursor, c.nextSibling);
+        i += 1;
+        // slight human jitter; brief pause after punctuation
+        var ch = c.textContent;
+        var delay = 24 + Math.random() * 26;
+        if (/[;,—.]/.test(ch)) delay += 140;
+        setTimeout(step, delay);
+      }
+      step();
+    }
 
-      row.addEventListener('mouseleave', function () {
-        peek.classList.remove('is-visible');
-      });
+    var io = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        io.disconnect();
+        setTimeout(type, 250);
+      }
+    }, { threshold: 0.45 });
+    io.observe(quote);
+  }
 
-      row.addEventListener('click', function (e) {
-        e.preventDefault();
-        peek.classList.remove('is-visible');
-        openLightbox(id);
+  /* ------------------------------------------------------------------
+     ACCORDION — catalog rows expand into featured plates
+  ------------------------------------------------------------------ */
+  function initAccordion() {
+    var heads = document.querySelectorAll(".acc__head");
+    heads.forEach(function (head) {
+      head.addEventListener("click", function () {
+        var acc = head.parentElement;
+        var opening = !acc.classList.contains("is-open");
+        // close any other open row
+        document.querySelectorAll(".acc.is-open").forEach(function (other) {
+          if (other !== acc) {
+            other.classList.remove("is-open");
+            other.querySelector(".acc__head").setAttribute("aria-expanded", "false");
+          }
+        });
+        acc.classList.toggle("is-open", opening);
+        head.setAttribute("aria-expanded", opening ? "true" : "false");
       });
     });
   }
+
+  /* ------------------------------------------------------------------
+     MOBILE NAV
+  ------------------------------------------------------------------ */
+  function initNav() {
+    var burger = document.getElementById("burger");
+    var nav = document.getElementById("mobileNav");
+    if (!burger || !nav) return;
+    burger.addEventListener("click", function () {
+      var open = nav.classList.toggle("is-open");
+      burger.textContent = open ? "CLOSE" : "MENU";
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     BOOT
+  ------------------------------------------------------------------ */
+  document.addEventListener("DOMContentLoaded", function () {
+    initTicker();
+    initNav();
+    initObserver();
+    initNamePeek();
+    initAccordion();
+    initTypewriter();
+    runLoader();
+  });
 })();

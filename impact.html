@@ -4,137 +4,183 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Impact — TEDxTampa</title>
-<meta name="description" content="A sold-out return. A city ready to listen. What TEDxTampa's May 2, 2025 evening set in motion.">
+<meta name="description" content="A sold-out return. A city ready to listen. The verified record of TEDxTampa: Lift As You Climb — May 2, 2025.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/main.js" defer></script>
-<link rel="stylesheet" href="css/review.css">
-<script src="js/review.js" defer></script>
 </head>
-<body>
+<body class="is-loading">
 
-<nav class="nav">
-  <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>
-  <ul class="nav__links" id="navLinks">
-    <span class="nav__brand"><b>TEDx</b><span>Tampa</span></span>
-    <button class="nav__close" aria-label="Close menu" onclick="document.getElementById('navLinks').classList.remove('is-open')">&times;</button>
-    <li class="nav__home"><a href="index.html">Home</a></li>
-    <li><a href="talks.html">Talks &amp; Speakers</a></li>
-    <li><a href="impact.html" aria-current="page">Impact</a></li>
-    <li><a href="about.html">About &amp; Team</a></li>
-    <li><a href="partners.html">Partners</a></li>
-  </ul>
-  <a class="btn btn--red" href="talks.html"><span class="play"></span>Watch the Talks</a>
-  <button class="nav__burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('is-open')">
-    <span></span><span></span>
-  </button>
-</nav>
-
-<header class="page-hero page-hero--red" data-review-id="impact-hero">
-  <p class="kicker kicker--black label">A Sold-Out Return · May 2, 2025</p>
-  <div class="page-hero__row">
-    <h1 data-animate-lines class="display">Impact</h1>
-    <p class="page-hero__lede">After nearly a decade away, TEDxTampa returned with a stage built for the people and ideas shaping the region's future — and a city ready to listen.</p>
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__top"><span>TEDX—TPA</span><span>A POST-EVENT ARCHIVE</span></div>
+  <div class="loader__mid">
+    <h1 class="loader__title">
+      <span class="line"><span>Impact</span></span>
+    </h1>
+    <span class="loader__dot"></span>
   </div>
-</header>
-
-<div class="photo-band photo-band--single" data-review-id="impact-photo">
-  <img src="assets/theater-tiers.jpg" alt="The tiered balconies of Ferguson Hall filling with the TEDxTampa audience">
+  <div class="loader__bottom"><span class="loader__count" id="loaderCount">PLATE 00 / 10</span><span>VERIFIED FIGURES</span></div>
 </div>
 
-<section class="stats" aria-label="The snapshot" style="grid-template-columns: repeat(3, 1fr);" data-review-id="impact-stats">
-  <div class="stat">
-    <span class="stat__value stat__value--red" data-reveal>Sold Out</span>
-    <span class="label">Tampa came ready</span>
-    <p>Every seat claimed for the return of TEDxTampa — a city interested in what ten ideas could mean for its organizations, neighborhoods, and next generation.</p>
-  </div>
-  <div class="stat">
-    <span class="stat__value" data-count="1000">1,000</span>
-    <span class="label">Seats made available</span>
-    <p>A city-scale gathering centered on ideas worth sharing, from check-in at the museum to the final applause.</p>
-  </div>
-  <div class="stat">
-    <span class="stat__value" data-count="2">2</span>
-    <span class="label">Venues, one journey</span>
-    <p>The evening began at the Tampa Museum of Art and continued at Ferguson Hall at the Straz Center.</p>
-  </div>
-</section>
+<header class="site-header">
+  <a class="site-header__logo" href="index.html" aria-label="TEDxTampa home">
+    <img src="assets/logo-onlight.png" alt="TEDxTampa">
+  </a>
+  <span class="site-header__tag mono-label">A POST-EVENT ARCHIVE — MAY 2, 2025</span>
+  <nav class="site-header__nav" aria-label="Primary">
+    <a href="talks.html">Talks</a>
+    <a href="impact.html" class="is-active">Impact</a>
+    <a href="about.html">Team</a>
+    <a href="partners.html">Sponsors</a>
+    <a class="site-header__cta" href="talks.html">Watch All ↗</a>
+  </nav>
+  <button class="site-header__burger" id="burger" aria-label="Menu">MENU</button>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+  <a href="talks.html">Talks &amp; Speakers</a>
+  <a href="impact.html" class="is-active">Impact</a>
+  <a href="about.html">Team</a>
+  <a href="partners.html">Sponsors</a>
+</nav>
 
-<article class="story" data-review-id="impact-tampa-ready">
-  <div class="story__photo">
-    <img src="assets/museum-group.jpg" alt="Guests connecting at the Tampa Museum of Art before the talks">
-  </div>
-  <div class="story__copy">
-    <span class="label label--red">A Civic Event, Not Just a Stage</span>
-    <h2 data-animate-lines>Tampa came ready</h2>
-    <p>Leaders and original thinkers from healthcare, higher education, aviation, technology, public service, entertainment, and spiritual life — an idea about vulnerability beside an idea about democracy, AI in conversation with mentorship, research, and faith. The sold-out audience was part of that exchange.</p>
-  </div>
-</article>
-
-<article class="story story--flip" data-review-id="impact-venues">
-  <div class="story__copy">
-    <span class="label label--red">Two Venues, One Journey</span>
-    <h2 data-animate-lines>From the museum to the Straz</h2>
-    <p>Check-in and networking opened the evening at the Tampa Museum of Art, one of the city's signature cultural spaces. The program continued at Ferguson Hall, where ten talks unfolded in a theater built for shared attention.</p>
-    <a class="link-arrow" href="https://www.flickr.com/photos/tags/tedxtampa/">See the photo archive on Flickr</a>
-  </div>
-  <div class="story__photo">
-    <img src="assets/museum-lobby.jpg" alt="The Tampa Museum of Art lobby during TEDxTampa check-in">
-  </div>
-</article>
-
-<section class="section section--panel" data-review-id="impact-summit">
-  <div class="cols" style="padding: 0; gap: 80px;">
-    <div>
-      <span class="label label--red" style="display:block; margin-bottom:16px;">Summit Startups · Retrospective</span>
-      <h2 data-animate-lines class="display" style="font-size: clamp(30px, 3vw, 44px); line-height:1.05;">Making room for the next idea</h2>
+<!-- SPLASH HERO -->
+<section class="hero-splash" style="background-image:url('assets/audience-full-room-bw.jpg'); background-position:center 30%;">
+  <div class="hero-splash__scrim">
+    <div class="hero-splash__meta">
+      <span data-reveal>Fig. 00 — The House, Seen from the Stage</span>
+      <span data-reveal>19:04 EST</span>
     </div>
-    <div>
-      <p>Summit Startups extended TEDxTampa's interest in local ideas and shared opportunity — connecting promising startups in AI, blockchain, and health technology with local and national investors, while widening access for founders often underrepresented in those rooms.</p>
-      <p class="pending">[PLACEHOLDER — Add only verified Summit Startups participation, finalist, investor, or funding outcomes approved by the organizers.]</p>
+    <div class="hero-splash__bottom">
+      <h1 class="hero-splash__title reveal-lines">
+        <span class="line"><span>A sold-out return<span class="hero__dot hero__dot--splash"></span></span></span>
+        <span class="line"><span>A city ready to listen.</span></span>
+      </h1>
+      <p class="hero-splash__lede" data-reveal>After nearly a decade away, TEDxTampa returned with one shared challenge: as we move upward, how do we create momentum for others?</p>
     </div>
   </div>
 </section>
 
-<section class="band" style="border-bottom: 1px solid var(--color-line);" data-review-id="impact-news">
-  <div>
-    <span class="label label--red" style="display:block; margin-bottom:10px;">In the News</span>
-    <h2 style="font-size:28px; font-weight:700; text-transform:none; letter-spacing:0; line-height:1.2;">TEDxTampa returns to the Straz Center</h2>
-    <p style="font-size:14px; color:var(--color-muted); margin-top:8px;">That's So Tampa · local coverage of the return</p>
+<!-- VERIFIED FIGURES -->
+<section class="stat-grid">
+  <div class="stat-cell" data-reveal>
+    <span class="mono-label">Status</span>
+    <span class="value red">Sold Out</span>
   </div>
-  <a class="btn btn--red" href="https://thatssotampa.com/tedx-tampa-conference-straz/">Read the Coverage →</a>
+  <div class="stat-cell" data-reveal="2">
+    <span class="mono-label">Speakers &amp; Talks</span>
+    <span class="value" data-count="10">0</span>
+  </div>
+  <div class="stat-cell" data-reveal="3">
+    <span class="mono-label">Seats Made Available</span>
+    <span class="value" data-count="1,000">0</span>
+  </div>
+  <div class="stat-cell" data-reveal="4">
+    <span class="mono-label">Tampa Venues</span>
+    <span class="value" data-count="2">0</span>
+  </div>
+  <div class="stat-cell" data-reveal="5">
+    <span class="mono-label">Shared Theme</span>
+    <span class="value" data-count="1">0</span>
+  </div>
 </section>
 
-<figure class="voice" data-review-id="impact-quote">
-  <blockquote>[PLACEHOLDER — Approved quote from a Tampa civic leader, attendee, or partner about the evening. Do not publish until exact wording and attribution are confirmed.]</blockquote>
-  <figcaption>[Name, Title — source pending approval]</figcaption>
-</figure>
+<!-- WALL TEXT -->
+<section class="text-cols">
+  <div class="text-cols__head">
+    <span class="kicker mono-label mono-label--red" data-reveal>Wall Text</span>
+    <h2 class="reveal-lines"><span class="line"><span>Tampa came</span></span><span class="line"><span>ready</span></span></h2>
+  </div>
+  <div class="text-cols__body">
+    <p data-reveal>TEDxTampa brought together leaders and original thinkers from healthcare, higher education, aviation, technology, public service, entertainment, entrepreneurship, and spiritual life. That range mattered. It allowed an idea about vulnerability to sit beside an idea about democracy, and a conversation about artificial intelligence to share space with one about mentorship, research, or faith.</p>
+    <p data-reveal="2">The audience was part of that exchange. The sold-out response reflected a city interested not only in hearing accomplished people speak, but in considering what their ideas could mean for Tampa's organizations, neighborhoods, and next generation of leaders. The result was a local event with a wider horizon: grounded in Tampa, informed by global experience, designed to keep moving after the final applause.</p>
+  </div>
+</section>
 
-<footer class="footer" data-review-id="impact-footer">
-  <div class="footer__top">
-    <div class="footer__brand">
-      <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>
-      <p>This independent TEDx event is operated under license from TED. In the spirit of ideas worth spreading, TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.</p>
+<!-- TWO VENUES -->
+<section class="chapters">
+  <div class="chapter">
+    <div class="chapter__frame" data-clip>
+      <img src="assets/museum-lobby.jpg" alt="Guests gathering in the Tampa Museum of Art lobby" loading="lazy">
     </div>
-    <div class="footer__cols">
-      <div class="footer__col">
-        <span class="label">Site</span>
-        <a href="talks.html">Talks &amp; Speakers</a>
-        <a href="impact.html">Impact</a>
-        <a href="about.html">About &amp; Team</a>
-        <a href="partners.html">Partners</a>
+    <div class="chapter__body">
+      <div class="chapter__meta">
+        <span class="mono-label mono-label--red">Chapter 01 — Gather</span>
+        <span class="mono-label">18:00 EST</span>
       </div>
-      <div class="footer__col">
-        <span class="label">Elsewhere</span>
-        <a href="https://www.instagram.com/tedxtampa/">Instagram</a>
-        <a href="https://www.flickr.com/photos/tags/tedxtampa/">Flickr — Event Photos</a>
-        <a href="https://www.youtube.com/@TEDx">YouTube — TEDx</a>
-        <a href="https://www.ted.com/">TED.com</a>
-      </div>
+      <h3>Tampa Museum of Art</h3>
+      <p>The evening opened at the Tampa Museum of Art. Check-in and networking gave guests time to arrive, connect, and enter the event through one of the city's signature cultural spaces.</p>
     </div>
   </div>
-  <div class="footer__bottom">
-    <span>TEDxTampa · Lift As You Climb · Tampa, Florida · May 2, 2025</span>
-    <span>x = independently organized TED event</span>
+  <div class="chapter">
+    <div class="chapter__frame" data-clip>
+      <img src="assets/theater-tiers.jpg" alt="The tiered balconies of Ferguson Hall" loading="lazy">
+    </div>
+    <div class="chapter__body">
+      <div class="chapter__meta">
+        <span class="mono-label mono-label--red">Chapter 02 — Listen</span>
+        <span class="mono-label">19:30 EST</span>
+      </div>
+      <h3>Ferguson Hall at the Straz Center</h3>
+      <p>The program continued at Ferguson Hall, where the TEDxTampa stage became the focus. Ten talks unfolded in a theater built for shared attention, giving each idea room to land before the next began.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMIT STARTUPS -->
+<section class="text-cols text-cols--dark">
+  <div class="text-cols__head">
+    <span class="kicker mono-label mono-label--red" data-reveal>Annex — Retrospective</span>
+    <h2 class="reveal-lines"><span class="line"><span>Summit</span></span><span class="line"><span>Startups</span></span></h2>
+  </div>
+  <div class="text-cols__body" style="flex-direction:column; gap:32px;">
+    <p style="max-width:760px;" data-reveal>Summit Startups was created as an extension of TEDxTampa's interest in local ideas and shared opportunity — connecting promising startups with local and national investors while widening access for founders and communities often underrepresented in those rooms. The initiative focused on emerging work in artificial intelligence, blockchain, health technology, and other fields with the potential to shape what comes next.</p>
+    <p style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#9a9a9a;" data-reveal="2"><span class="red">●</span>&nbsp;&nbsp;A practical question: how can an event about ideas help more people move an idea forward?</p>
+  </div>
+</section>
+
+<!-- IN THE NEWS -->
+<a class="press-row" href="https://thatssotampa.com/tedx-tampa-conference-straz/" target="_blank" rel="noopener">
+  <span class="tag">In the News</span>
+  <span class="headline">TEDxTampa Returns to the Straz Center</span>
+  <span class="src">That's So Tampa — Local Coverage</span>
+  <span class="action">Read ↗</span>
+</a>
+
+<!-- RED CTA -->
+<a class="red-band" href="talks.html">
+  <h2 class="reveal-lines"><span class="line"><span>The stage was one night.</span></span><span class="line"><span>The ideas keep moving.</span></span></h2>
+  <span class="red-band__btn">↗</span>
+</a>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-grid__statement">
+      <h2>Ten talks, free to watch — whenever you're ready.</h2>
+      <span class="mono-label">The archive is open 24/7. No tickets required.</span>
+    </div>
+    <div class="footer-grid__col">
+      <span class="head mono-label">Explore</span>
+      <a href="talks.html">Talks &amp; Speakers</a>
+      <a href="impact.html">Impact</a>
+      <a href="about.html">Team</a>
+      <a href="partners.html">Sponsors</a>
+    </div>
+    <div class="footer-grid__col">
+      <span class="head mono-label">Follow</span>
+      <a href="https://www.instagram.com/tedxtampa/" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="https://www.flickr.com/photos/tags/tedxtampa/" target="_blank" rel="noopener">Flickr ↗</a>
+      <a href="https://www.youtube.com/@TEDx" target="_blank" rel="noopener">YouTube ↗</a>
+      <a href="https://www.ted.com/" target="_blank" rel="noopener">TED.com ↗</a>
+    </div>
+  </div>
+  <div class="footer-logo" data-reveal>
+    <img src="assets/logo-onlight.png" alt="TEDxTampa" loading="lazy">
+  </div>
+  <div class="footer-legal">
+    <span>This independent TEDx event is operated under license from TED. Lift As You Climb — Tampa, Florida, May 2, 2025.</span>
+    <span>X = Independently Organized TED Event</span>
   </div>
 </footer>
 

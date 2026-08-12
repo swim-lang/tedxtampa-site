@@ -4,149 +4,166 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About &amp; Team — TEDxTampa</title>
-<meta name="description" content="Lift As You Climb: an event theme, a leadership principle, and the Tampa team that brought TEDx back to the city.">
+<meta name="description" content="Lift As You Climb: an event theme, a leadership principle, a challenge to make progress more generous. Meet the curators of TEDxTampa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/main.js" defer></script>
-<link rel="stylesheet" href="css/review.css">
-<script src="js/review.js" defer></script>
 </head>
-<body>
+<body class="is-loading">
 
-<nav class="nav">
-  <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>
-  <ul class="nav__links" id="navLinks">
-    <span class="nav__brand"><b>TEDx</b><span>Tampa</span></span>
-    <button class="nav__close" aria-label="Close menu" onclick="document.getElementById('navLinks').classList.remove('is-open')">&times;</button>
-    <li class="nav__home"><a href="index.html">Home</a></li>
-    <li><a href="talks.html">Talks &amp; Speakers</a></li>
-    <li><a href="impact.html">Impact</a></li>
-    <li><a href="about.html" aria-current="page">About &amp; Team</a></li>
-    <li><a href="partners.html">Partners</a></li>
-  </ul>
-  <a class="btn btn--red" href="talks.html"><span class="play"></span>Watch the Talks</a>
-  <button class="nav__burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('is-open')">
-    <span></span><span></span>
-  </button>
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__top"><span>TEDX—TPA</span><span>A POST-EVENT ARCHIVE</span></div>
+  <div class="loader__mid">
+    <h1 class="loader__title">
+      <span class="line"><span>The</span></span>
+      <span class="line"><span>Team</span></span>
+    </h1>
+    <span class="loader__dot"></span>
+  </div>
+  <div class="loader__bottom"><span class="loader__count" id="loaderCount">PLATE 00 / 10</span><span>TAMPA, FLORIDA</span></div>
+</div>
+
+<header class="site-header">
+  <a class="site-header__logo" href="index.html" aria-label="TEDxTampa home">
+    <img src="assets/logo-onlight.png" alt="TEDxTampa">
+  </a>
+  <span class="site-header__tag mono-label">A POST-EVENT ARCHIVE — MAY 2, 2025</span>
+  <nav class="site-header__nav" aria-label="Primary">
+    <a href="talks.html">Talks</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html" class="is-active">Team</a>
+    <a href="partners.html">Sponsors</a>
+    <a class="site-header__cta" href="talks.html">Watch All ↗</a>
+  </nav>
+  <button class="site-header__burger" id="burger" aria-label="Menu">MENU</button>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+  <a href="talks.html">Talks &amp; Speakers</a>
+  <a href="impact.html">Impact</a>
+  <a href="about.html" class="is-active">Team</a>
+  <a href="partners.html">Sponsors</a>
 </nav>
 
-<header class="page-hero page-hero--image" data-review-id="about-hero">
-  <p class="kicker label">Lift As You Climb · The People Behind It</p>
-  <div class="page-hero__row">
-    <h1 data-animate-lines class="display">About &amp;<br>Team</h1>
-    <p class="page-hero__lede">An event theme. A leadership principle. A challenge to make progress more generous — built by a Tampa team with global TEDx experience.</p>
-  </div>
-</header>
-
-<section class="cols" data-review-id="about-theme">
-  <div>
-    <h2>The Theme</h2>
-    <p>Lift As You Climb begins with a belief that progress becomes more meaningful when it creates a path for someone else. Mentorship, courage, access, conversation, and shared opportunity are not side effects of leadership — they are part of the work. The theme gave ten speakers a common starting point without asking them to arrive at the same conclusion.</p>
-    <p>In 2025, TEDxTampa returned after nearly a decade, rebuilt around the energy of a changing city. The evening began at the Tampa Museum of Art and moved to Ferguson Hall at the Straz Center — placing the event within Tampa's cultural core. The organizers brought experience from TEDx and community-building work in India, Dubai, New York, and Abu Dhabi, but TEDxTampa remained unmistakably local.</p>
-  </div>
-  <div>
-    <h2>About TED</h2>
-    <p>TED is a nonprofit organization devoted to discovering and spreading ideas. Through talks, media, and global programs, TED shares knowledge across disciplines and cultures. TEDx brings that spirit to independently organized local events.</p>
-    <p class="pending">[REQUIRED OFFICIAL COPY — insert the current About TED / About TEDx language from the official TEDx guidance before launch.]</p>
-    <a class="link-arrow" href="https://www.ted.com/">Visit TED.com</a>
+<!-- SPLASH HERO -->
+<section class="hero-splash hero-splash--bright" style="background-image:url('assets/museum-group-bw.jpg'); background-position:center 30%;">
+  <div class="hero-splash__scrim">
+    <div class="hero-splash__meta">
+      <span data-reveal>Fig. 05 — The People Who Brought It Back</span>
+      <span data-reveal>18:12 EST</span>
+    </div>
+    <div class="hero-splash__bottom">
+      <h1 class="hero-splash__title reveal-lines">
+        <span class="line"><span>No one reaches</span></span>
+        <span class="line"><span>the top alone<span class="hero__dot hero__dot--splash"></span></span></span>
+      </h1>
+      <p class="hero-splash__lede" data-reveal>Lift As You Climb begins with a belief that progress becomes more meaningful when it creates a path for someone else.</p>
+    </div>
   </div>
 </section>
 
-<section class="section section--black" data-review-id="about-curators">
-  <div class="section__head">
+<!-- THE THEME -->
+<section class="text-cols">
+  <div class="text-cols__head">
+    <span class="kicker mono-label mono-label--red" data-reveal>Wall Text — The Theme</span>
+    <h2 class="reveal-lines"><span class="line"><span>Lift as</span></span><span class="line"><span>you climb</span></span></h2>
+  </div>
+  <div class="text-cols__body">
+    <p data-reveal>Mentorship, courage, access, conversation, and shared opportunity are not side effects of leadership; they are part of the work. The theme gave TEDxTampa's ten speakers a common starting point without asking them to arrive at the same conclusion — across healthcare, public service, education, technology, entertainment, business, and spiritual life.</p>
+    <p data-reveal="2">For the audience, the invitation was equally direct: take what moves you, apply it where you are, and make the next step easier for someone coming behind you. Each talk offered a different view of how people lead, connect, and carry an idea forward.</p>
+  </div>
+</section>
+
+<!-- THE RETURN -->
+<section class="plate-spread" style="border-bottom:1px solid var(--ink);">
+  <div class="plate-photo" data-clip>
+    <img src="assets/museum-lobby.jpg" alt="Guests gathering in the Tampa Museum of Art lobby" loading="lazy">
+  </div>
+  <div class="plate-body">
+    <div class="plate-meta"><span class="no">A New Chapter</span><span class="dur">Fig. 04 — The Return</span></div>
     <div>
-      <span class="label label--red">The Curators</span>
-      <h2 data-animate-lines>Curated with conviction</h2>
+      <h3 class="plate-title" data-reveal>TEDxTampa returns after nearly a decade</h3>
+      <p style="margin-top:24px; max-width:520px; color:var(--muted); font-size:12px;" data-reveal="2">The event was rebuilt around the energy of a changing city and a belief that Tampa deserved a shared stage for ideas with both local relevance and wider reach. The organizers brought experience from TEDx events and community-building work in India, Dubai, New York, and Abu Dhabi — but TEDxTampa remained unmistakably local in its audience, setting, and purpose.</p>
     </div>
-  </div>
-  <div class="curators">
-    <div class="curator">
-      <div class="curator__photo"><span class="label">Portrait — pending approved photo</span></div>
-      <div class="curator__info">
-        <h3>Krishna Patel</h3>
-        <span class="label">Curator</span>
-        <p>&ldquo;It's not just an event; it's a catalyst — where ideas collide, connections form.&rdquo; A Tampa native with community-building experience across several cities and cultures, Krishna helped guide the event's return and its vision for a gathering where ideas spark new relationships and action.</p>
-      </div>
-    </div>
-    <div class="curator">
-      <div class="curator__photo"><span class="label">Portrait — pending approved photo</span></div>
-      <div class="curator__info">
-        <h3>Harikrishna Patel</h3>
-        <span class="label">Curator</span>
-        <p>&ldquo;Every talk, every interaction, every moment adds a splash of color.&rdquo; A Tampa native and community builder whose work spans international TEDx experiences, Harikrishna helped bring the event back to the city and shape a platform centered on meaningful ideas and shared progress.</p>
-      </div>
-    </div>
+    <span class="mono-label" data-reveal="3">Tampa Museum of Art → Ferguson Hall, One Evening</span>
   </div>
 </section>
 
-<section class="section" data-review-id="about-team">
-  <div class="section__head">
-    <h2 data-animate-lines>The volunteer team</h2>
-    <p class="pending" style="max-width:360px;">[PLACEHOLDER — Approved organizer and core team roster with names, roles, and headshots pending from the organizers.]</p>
+<!-- THE CURATORS -->
+<section class="name-wall-section">
+  <div class="section-head">
+    <div>
+      <span class="section-head__kicker mono-label mono-label--red" data-reveal>Curated in Tampa</span>
+      <h2 class="reveal-lines"><span class="line"><span>The Curators</span></span></h2>
+    </div>
+    <span class="section-head__link" data-reveal>A Local Stage, A Global Point of View</span>
   </div>
-  <div class="team-grid">
-    <div class="team-tile">
-      <div class="team-tile__photo"><span class="label">Headshot</span></div>
-      <h3>Team Member Name</h3>
-      <p>Role — Production [Placeholder]</p>
-    </div>
-    <div class="team-tile">
-      <div class="team-tile__photo"><span class="label">Headshot</span></div>
-      <h3>Team Member Name</h3>
-      <p>Role — Speaker Coaching [Placeholder]</p>
-    </div>
-    <div class="team-tile">
-      <div class="team-tile__photo"><span class="label">Headshot</span></div>
-      <h3>Team Member Name</h3>
-      <p>Role — Partnerships [Placeholder]</p>
-    </div>
-    <div class="team-tile">
-      <div class="team-tile__photo"><span class="label">Headshot</span></div>
-      <h3>Team Member Name</h3>
-      <p>Role — Marketing [Placeholder]</p>
-    </div>
-    <div class="team-tile">
-      <div class="team-tile__photo"><span class="label">Headshot</span></div>
-      <h3>Team Member Name</h3>
-      <p>Role — Volunteers [Placeholder]</p>
-    </div>
-    <div class="team-tile">
-      <div class="team-tile__photo"><span class="label">Headshot</span></div>
-      <h3>Team Member Name</h3>
-      <p>Role — Experience Design [Placeholder]</p>
-    </div>
-  </div>
-</section>
-
-<section class="section section--panel" style="padding-top:64px; padding-bottom:64px;" data-review-id="about-tedx">
-  <p style="font-size:15px; line-height:1.6; color:#333; max-width:820px;">TEDxTampa is an independent TEDx event operated under license from TED. TED does not organize or manage TEDxTampa. <a class="link-arrow" href="https://www.ted.com/about/programs-initiatives/tedx-program">Learn more about the TEDx program</a></p>
-</section>
-
-<footer class="footer" data-review-id="about-footer">
-  <div class="footer__top">
-    <div class="footer__brand">
-      <a class="logo" href="index.html"><b>TEDx</b><span>Tampa</span></a>
-      <p>This independent TEDx event is operated under license from TED. In the spirit of ideas worth spreading, TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.</p>
-    </div>
-    <div class="footer__cols">
-      <div class="footer__col">
-        <span class="label">Site</span>
-        <a href="talks.html">Talks &amp; Speakers</a>
-        <a href="impact.html">Impact</a>
-        <a href="about.html">About &amp; Team</a>
-        <a href="partners.html">Partners</a>
+  <div class="curator-grid">
+    <div class="curator" data-reveal>
+      <div class="plate-meta"><span class="no">Curator 01</span><span class="dur">Tampa Native</span></div>
+      <h3>Harikrishna Patel</h3>
+      <div>
+        <p class="bio">Community builder whose work spans international TEDx experiences and cross-cultural initiatives. He helped bring the event back to the city and shape a platform centered on meaningful ideas, human connection, and shared progress.</p>
+        <p class="quote">"Every talk, every interaction, every moment adds a splash of <span class="red">color</span>."</p>
       </div>
-      <div class="footer__col">
-        <span class="label">Elsewhere</span>
-        <a href="https://www.instagram.com/tedxtampa/">Instagram</a>
-        <a href="https://www.flickr.com/photos/tags/tedxtampa/">Flickr — Event Photos</a>
-        <a href="https://www.youtube.com/@TEDx">YouTube — TEDx</a>
-        <a href="https://www.ted.com/">TED.com</a>
+    </div>
+    <div class="curator" data-reveal="2">
+      <div class="plate-meta"><span class="no">Curator 02</span><span class="dur">Tampa Native</span></div>
+      <h3>Krishna Patel</h3>
+      <div>
+        <p class="bio">Experienced in community-building initiatives across several cities and cultures. He helped guide the event's return and the vision for a gathering where ideas could spark new relationships and action.</p>
+        <p class="quote">"It's not just an event; it's a <span class="red">catalyst</span> — where ideas collide, connections form."</p>
       </div>
     </div>
   </div>
-  <div class="footer__bottom">
-    <span>TEDxTampa · Lift As You Climb · Tampa, Florida · May 2, 2025</span>
-    <span>x = independently organized TED event</span>
+  <div class="slim-band">
+    <span>The Organizing Team — Built by people who believe in the room</span>
+    <span class="right">Volunteers · Production · Venues · Partners</span>
+  </div>
+</section>
+
+<!-- ABOUT TEDx / TED -->
+<div class="legal-duo">
+  <section>
+    <span class="mono-label mono-label--red">About TEDx</span>
+    <p>TEDx is a program of independently organized local events that bring people together to share ideas and create TED-like experiences in their own communities. TEDxTampa is independently organized under license from TED.</p>
+    <a href="https://www.ted.com/about/programs-initiatives/tedx-program" target="_blank" rel="noopener">Learn more about the TEDx program ↗</a>
+  </section>
+  <section>
+    <span class="mono-label mono-label--red">About TED</span>
+    <p>TED is a nonprofit organization devoted to discovering and spreading ideas. Through talks, media, and global programs, TED shares knowledge across disciplines and cultures. TED does not organize or manage TEDxTampa.</p>
+    <a href="https://www.ted.com/" target="_blank" rel="noopener">Learn more at TED.com ↗</a>
+  </section>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-grid__statement">
+      <h2>Ten talks, free to watch — whenever you're ready.</h2>
+      <span class="mono-label">The archive is open 24/7. No tickets required.</span>
+    </div>
+    <div class="footer-grid__col">
+      <span class="head mono-label">Explore</span>
+      <a href="talks.html">Talks &amp; Speakers</a>
+      <a href="impact.html">Impact</a>
+      <a href="about.html">Team</a>
+      <a href="partners.html">Sponsors</a>
+    </div>
+    <div class="footer-grid__col">
+      <span class="head mono-label">Follow</span>
+      <a href="https://www.instagram.com/tedxtampa/" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="https://www.flickr.com/photos/tags/tedxtampa/" target="_blank" rel="noopener">Flickr ↗</a>
+      <a href="https://www.youtube.com/@TEDx" target="_blank" rel="noopener">YouTube ↗</a>
+      <a href="https://www.ted.com/" target="_blank" rel="noopener">TED.com ↗</a>
+    </div>
+  </div>
+  <div class="footer-logo" data-reveal>
+    <img src="assets/logo-onlight.png" alt="TEDxTampa" loading="lazy">
+  </div>
+  <div class="footer-legal">
+    <span>This independent TEDx event is operated under license from TED. Lift As You Climb — Tampa, Florida, May 2, 2025.</span>
+    <span>X = Independently Organized TED Event</span>
   </div>
 </footer>
 
